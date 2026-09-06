@@ -1,35 +1,43 @@
-import { Injectable } from '@angular/core';
+import { Injectable, signal } from '@angular/core';
 import { Router } from '@angular/router';
+import { toObservable } from '@angular/core/rxjs-interop';
 
 @Injectable({
   providedIn: 'root',
 })
 export class AuthService {
-  private _isLoggedIn = false;
+  private _isLoggedIn = signal(false);
   constructor(private router: Router) {}
 
-  get isLoggedIn(): boolean {
-    return this._isLoggedIn;
+  isLoggedIn$ = toObservable(this._isLoggedIn);
+
+  isLoggedIn() {
+    return this._isLoggedIn.asReadonly();
   }
 
-  login(email: string, password: string) {
+  async login(email: string, password: string): Promise<boolean> {
     //Simulating an API call for now
     if (email && password) {
-      this._isLoggedIn = true;
-      this.router.navigate(['/groups']);
+      this._isLoggedIn.set(true);
+      localStorage.setItem('zentro-auth', 'true');
+      return true;
     }
+    return false;
   }
 
-  register(name: string, email: string, password: string) {
+  async register(email: string, password: string) {
     //Simulating an API call for now
-    if (email && password) {
-      this._isLoggedIn = true;
-      this.router.navigate(['/groups']);
-    }
+    return true;
   }
 
   logout() {
-    this._isLoggedIn = false;
-    this.router.navigate(['/login']);
+    this._isLoggedIn.set(false);
+    localStorage.removeItem('zentro-auth');
+  }
+
+  restoreSession() {
+    if (localStorage.getItem('zentro-auth')) {
+      this._isLoggedIn.set(true);
+    }
   }
 }

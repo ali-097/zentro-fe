@@ -2,7 +2,7 @@
   <a routerLink="" class="text-lg font-bold">Zentro-FE</a>
   <div>
     <a routerLink="/groups" routerLinkActive="active" class="mx-2">Groups</a>
-    @if (!this.authService.isLoggedIn) {
+    @if (!this.authService.isLoggedIn()()) {
     <a routerLink="/login" routerLinkActive="active" class="mx-2">Login</a>
     <a routerLink="/register" routerLinkActive="active" class="mx-2">Register</a>
     } @else {

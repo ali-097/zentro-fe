@@ -1,55 +1,32 @@
 import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { AuthService } from '../../services/auth.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-register',
   standalone: true,
   imports: [FormsModule],
-  template: `
-    <div class="max-w-md mx-auto bg-white shadow p-6 rounded">
-      <h2 class="text-2xl font-bold mb-4">Register</h2>
-      <form (ngSubmit)="onSubmit()" #regForm="ngForm">
-        <input
-          type="text"
-          [(ngModel)]="name"
-          name="name"
-          placeholder="Name"
-          class="w-full mb-3 p-2 border rounded"
-          required
-        />
-
-        <input
-          type="email"
-          [(ngModel)]="email"
-          name="email"
-          placeholder="Email"
-          class="w-full mb-3 p-2 border rounded"
-          required
-        />
-
-        <input
-          type="password"
-          [(ngModel)]="password"
-          name="password"
-          placeholder="Password"
-          class="w-full mb-3 p-2 border rounded"
-          required
-        />
-
-        <button type="submit" class="w-full bg-green-500 text-white p-2 rounded">Sign up</button>
-      </form>
-    </div>
-  `,
+  templateUrl: './register.html',
 })
 export class Register {
-  name = '';
   email = '';
+  confirmPassword = '';
   password = '';
+  error = '';
 
-  constructor(private auth: AuthService) {}
+  constructor(private auth: AuthService, private router: Router) {}
 
-  onSubmit() {
-    this.auth.register(this.name, this.email, this.password);
+  async onRegister() {
+    if (this.password !== this.confirmPassword) {
+      this.error = 'Passwords do not match';
+      return;
+    }
+    const success = await this.auth.register(this.email, this.password);
+    if (success) {
+      this.router.navigate(['/groups']);
+    } else {
+      this.error = 'Registration failed';
+    }
   }
 }

@@ -1,0 +1,20 @@
+<div class="max-w-2xl mx-auto">
+  <h1 class="text-2xl font-bold mb-4">Groups</h1>
+
+  <!-- Create group -->
+  <div class="flex mb-6">
+    <input type="text" placeholder="Group name" class="flex-1 border rounded-l px-3 py-2" />
+    <button class="bg-blue-500 text-white px-4 py-2 rounded-r hover:bg-blue-600">Create</button>
+  </div>
+
+  <!-- Groups list -->
+  <div *ngFor="let group of groups" class="border rounded p-4 mb-4 bg-white shadow">
+    <div class="flex justify-between items-center">
+      <div>
+        <h2 class="font-semibold">{{ group.name }}</h2>
+        <p class="text-sm text-gray-500">Members: {{ group.members.length }}</p>
+      </div>
+      <button class="bg-green-500 text-white px-3 py-1 rounded hover:bg-green-600">Join</button>
+    </div>
+  </div>
+</div>
