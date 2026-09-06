@@ -1,11 +1,12 @@
-import { Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import { AuthService } from '../../services/auth.service';
 import { FormsModule } from '@angular/forms';
 
 @Component({
-  selector: 'app-login',
+  selector: 'z-login',
   standalone: true,
   imports: [FormsModule],
+  changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
     <div class="max-w-md mx-auto bg-white shadow p-6 rounded">
       <h2 class="text-2xl font-bold mb-4">Login</h2>
@@ -34,7 +35,7 @@ import { FormsModule } from '@angular/forms';
 export class Login {
   email = '';
   password = '';
-  constructor(private authService: AuthService) {}
+  private readonly authService = inject(AuthService);
   onSubmit() {
     this.authService.login(this.email, this.password);
   }

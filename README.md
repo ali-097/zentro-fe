@@ -1,59 +1,135 @@
-# ZentroFE
+# Zentro Web
 
-This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 20.2.0.
+The Angular client for **Zentro**, an expense-sharing app — groups, shared expenses, split
+calculation, running balances and settle-up.
 
-## Development server
+The API lives in a separate repository: **[Zentro-BE](https://github.com/ali-097/Zentro-BE)**.
+This app is a pure consumer of it — see [The client enforces nothing](#the-client-enforces-nothing).
 
-To start a local development server, run:
+| | |
+|---|---|
+| **Stack** | Angular 20 (standalone, signals, zoneless) · Tailwind v4 · TypeScript 5.9 |
+| **Node** | 22 (see `.nvmrc`) |
+| **Dev server** | `http://localhost:4200` |
+| **API** | `http://localhost:3000/api/v1` |
+| **Board** | [Zentro project board](https://github.com/users/ali-097/projects) |
 
-```bash
-ng serve
-```
+---
 
-Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
+## Project status
 
-## Code scaffolding
+> **Pre-release. The `M0 Foundation` milestone is in progress.**
+>
+> This README, `ARCHITECTURE.md` and `docs/` describe the **target** design — they are what
+> M0 builds toward and what every issue is written against. Read them as the spec.
+>
+> The app today is a scaffold: pages exist but are mostly empty, auth is a `localStorage`
+> mock, and there is no HTTP layer. SSR removal, the zoneless migration, the `core`/`shared`/
+> `features` restructure and the generated API client are all `priority:P0` issues on the
+> board. Until they land, `npm run api:sync` has nothing to fetch.
 
-Angular CLI includes powerful code scaffolding tools. To generate a new component, run:
+---
 
-```bash
-ng generate component component-name
-```
+## Quickstart
 
-For a complete list of available schematics (such as `components`, `directives`, or `pipes`), run:
-
-```bash
-ng generate --help
-```
-
-## Building
-
-To build the project run:
-
-```bash
-ng build
-```
-
-This will compile your project and store the build artifacts in the `dist/` directory. By default, the production build optimizes your application for performance and speed.
-
-## Running unit tests
-
-To execute unit tests with the [Karma](https://karma-runner.github.io) test runner, use the following command:
+You need **Node 22**. From a clean clone:
 
 ```bash
-ng test
+npm ci                # install dependencies
+npm start             # http://localhost:4200
 ```
 
-## Running end-to-end tests
-
-For end-to-end (e2e) testing, run:
+For anything data-driven you also need the API running:
 
 ```bash
-ng e2e
+# in the Zentro-BE checkout
+docker compose up -d db && npm run start:dev     # http://localhost:3000
 ```
 
-Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
+The dev server proxies `/api` to `:3000`, and that origin is already in the backend's CORS
+allowlist.
 
-## Additional Resources
+If something misbehaves, check
+**[docs/runbooks/local-dev.md](./docs/runbooks/local-dev.md)** before debugging — it covers
+the common failures. If your problem isn't there, that's a documentation bug worth filing.
 
-For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+---
+
+## Scripts
+
+| Command | What it does |
+|---|---|
+| `npm start` | Dev server with hot reload on `:4200` |
+| `npm run build` | Production build to `dist/`, enforcing bundle budgets |
+| `npm run watch` | Development build in watch mode |
+| `npm run lint` | ESLint, check only — this is what CI runs |
+| `npm run lint:fix` | ESLint with `--fix` |
+| `npm run format` | Prettier over the source tree |
+| `npm run format:check` | Prettier in check mode — what CI runs |
+| `npm run typecheck` | `tsc --noEmit` — fastest correctness check |
+| `npm test` | Unit tests, headless |
+| `npm run test:watch` | Unit tests in watch mode |
+| `npm run api:sync` | Regenerate typed API models from the backend's OpenAPI document |
+
+---
+
+## Project layout
+
+```
+src/app/
+  core/       Singletons, instantiated once: auth service and store, HTTP
+              interceptors, generated API client, config, app shell and nav
+  shared/     Reusable and dumb: ui/ primitives, pipes/, directives/, utils/
+  features/   One folder per domain area — auth, groups, expenses,
+              settlements, activity, friends, profile
+```
+
+The dependency rule is one-directional: **`features → shared → core`**. Never upward, never
+feature-to-feature. ESLint enforces it, because this is the boundary that quietly erodes
+first and takes the codebase's navigability with it.
+
+Full annotated tree and a "where do I put X?" table:
+[docs/structure.md](./docs/structure.md).
+
+---
+
+## The client enforces nothing
+
+Worth stating plainly, because it shapes how you write everything here.
+
+Every rule that matters — who may see a group, whether a split is valid, what a balance is —
+lives in the API. This app renders what the server allows and sends what the user asks for.
+
+A route guard that hides `/groups` from a logged-out user is a **convenience**, so they see a
+login screen rather than an empty page. It is not security. Anyone can edit client state.
+Never move a check here to "save a round trip", and never trust a value this app computed
+about money.
+
+---
+
+## Working with the API
+
+Types are **generated from the backend's OpenAPI document, never hand-written**:
+
+```bash
+npm run api:sync      # fetches openapi.json, regenerates src/app/core/api/generated/
+```
+
+Generated files are committed, and **CI fails if regenerating produces a diff** — so this
+app can't silently drift from what the server actually returns. Run it after any backend
+change. See [docs/api-client.md](./docs/api-client.md) and
+[ADR-0004](./docs/adr/0004-generated-api-client.md).
+
+---
+
+## Contributing
+
+Read [CONTRIBUTING.md](./CONTRIBUTING.md) — branching, Conventional Commits, the PR flow and
+the review bar. Work is tracked on the shared project board; start with anything in the
+**M0 Foundation** milestone.
+
+AI coding agents should read [AGENTS.md](./AGENTS.md).
+
+## Security
+
+Found a vulnerability? See [SECURITY.md](./SECURITY.md) — please don't open a public issue.

@@ -3,17 +3,26 @@
   <div>
     <a routerLink="/groups" routerLinkActive="active" class="mx-2">Groups</a>
     @if (!this.authService.isLoggedIn) {
-    <a routerLink="/login" routerLinkActive="active" class="mx-2">Login</a>
-    <a routerLink="/register" routerLinkActive="active" class="mx-2">Register</a>
+      <a routerLink="/login" routerLinkActive="active" class="mx-2">Login</a>
+      <a routerLink="/register" routerLinkActive="active" class="mx-2">Register</a>
     } @else {
-    <!-- create an account button that shows a menu with two options profile and logout -->
-    <button class="mx-2" (click)="toggleMenu()">Account ▼</button>
-    @if (showAccountMenu) {
-    <div class="absolute right-0 bg-white text-black mt-2 p-2 rounded shadow-lg z-10">
-      <a routerLink="/profile" class="block px-4 py-2 hover:bg-gray-200">Profile</a>
-      <a (click)="logout()" class="block px-4 py-2 hover:bg-gray-200 cursor-pointer">Logout</a>
-    </div>
-    } }
+      <!-- create an account button that shows a menu with two options profile and logout -->
+      <button class="mx-2" (click)="toggleMenu()">Account ▼</button>
+      @if (showAccountMenu) {
+        <div class="absolute right-0 bg-white text-black mt-2 p-2 rounded shadow-lg z-10">
+          <a routerLink="/profile" class="block px-4 py-2 hover:bg-gray-200">Profile</a>
+          <!-- Logout acts rather than navigates, so it is a button. An <a> with a click
+           handler is not keyboard-focusable and is announced to screen readers as a link. -->
+          <button
+            type="button"
+            (click)="logout()"
+            class="block w-full px-4 py-2 text-left hover:bg-gray-200"
+          >
+            Logout
+          </button>
+        </div>
+      }
+    }
   </div>
 </nav>
 

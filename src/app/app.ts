@@ -1,18 +1,19 @@
-import { Component, signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject, signal } from '@angular/core';
 import { RouterOutlet, RouterLink, RouterLinkActive } from '@angular/router';
 import { AuthService } from './services/auth.service';
 
 @Component({
-  selector: 'app-root',
+  selector: 'z-root',
   imports: [RouterOutlet, RouterLink, RouterLinkActive],
   templateUrl: './app.html',
   styleUrl: './app.css',
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class App {
+  protected readonly authService = inject(AuthService);
+
   protected readonly title = signal('Zentro-FE');
   showAccountMenu = false;
-
-  constructor(public authService: AuthService) {}
 
   toggleMenu() {
     this.showAccountMenu = !this.showAccountMenu;

@@ -1,15 +1,10 @@
-import { Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component } from '@angular/core';
 
 @Component({
-  selector: 'app-groups',
+  selector: 'z-groups',
   imports: [],
-  template: `
-    <p>
-      groups works!
-    </p>
-  `,
-  styles: ``
+  template: ` <p>groups works!</p> `,
+  styles: ``,
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class Groups {
-
-}
+export class Groups {}

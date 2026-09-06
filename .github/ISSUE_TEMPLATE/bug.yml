@@ -1,0 +1,77 @@
+name: Bug report
+description: Something behaves or renders incorrectly
+labels: ['type:bug']
+body:
+  - type: markdown
+    attributes:
+      value: |
+        If this is a **security** issue, stop and report it privately instead:
+        [Security Advisories](https://github.com/ali-097/Zentro-FE/security/advisories/new).
+
+  - type: textarea
+    id: what-happened
+    attributes:
+      label: What happened
+      description: Include any console error, and the `requestId` from the error UI if there is one.
+    validations:
+      required: true
+
+  - type: textarea
+    id: expected
+    attributes:
+      label: What you expected instead
+    validations:
+      required: true
+
+  - type: textarea
+    id: reproduce
+    attributes:
+      label: Steps to reproduce
+      placeholder: |
+        1. Log in as alice@zentro.test
+        2. Open a group with no expenses
+        3. The page is blank instead of showing an empty state
+    validations:
+      required: true
+
+  - type: input
+    id: screenshot
+    attributes:
+      label: Screenshot or recording
+      description: Usually faster than describing it.
+
+  - type: dropdown
+    id: area
+    attributes:
+      label: Area
+      options:
+        - auth / login
+        - groups
+        - expenses / splits
+        - balances / settle-up
+        - profile
+        - layout / navigation
+        - build / tooling
+        - other / not sure
+    validations:
+      required: true
+
+  - type: checkboxes
+    id: severity
+    attributes:
+      label: Does any of this apply?
+      description: Any of these raises the priority.
+      options:
+        - label: It displays a wrong amount or balance
+        - label: It is unreachable by keyboard, or breaks a screen reader
+        - label: It only happens in dark mode
+        - label: It only happens on mobile / narrow screens
+
+  - type: textarea
+    id: environment
+    attributes:
+      label: Environment
+      placeholder: |
+        Browser and version:
+        Screen size:
+        Branch/commit:

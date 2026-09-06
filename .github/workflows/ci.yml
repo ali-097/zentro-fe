@@ -1,0 +1,108 @@
+name: CI
+
+# Runs only on pushes to main and on pull requests. There is no schedule and no cron —
+# nothing here runs on its own.
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+# A new push to a PR cancels the previous run instead of queueing behind it.
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+
+env:
+  NODE_VERSION: '22'
+
+jobs:
+  static:
+    name: Lint, format & types
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: npm
+
+      - run: npm ci
+
+      - name: Lint
+        run: npm run lint
+
+      - name: Check formatting
+        run: npm run format:check
+
+      - name: Typecheck
+        run: npm run typecheck
+
+  test:
+    name: Unit tests
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: npm
+
+      - run: npm ci
+
+      # ubuntu-latest ships Chrome, which Karma launches as ChromeHeadless.
+      - name: Unit tests
+        run: npm test
+
+  build:
+    name: Build
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: npm
+
+      - run: npm ci
+
+      # Also enforces the bundle budgets in angular.json — a build that silently doubles
+      # in size is a regression, and this is where it gets caught.
+      - name: Production build
+        run: npm run build
+
+  # The API is a separate repo, so nothing structurally stops this app's types drifting
+  # from what the server actually returns. Regenerating and diffing turns that drift into
+  # a red build instead of a runtime failure in front of a user.
+  #
+  # Enabled by the M0 issue that wires up the generated client, once the backend publishes
+  # openapi.json. See docs/adr/0004-generated-api-client.md.
+  api-contract:
+    name: API types are current
+    runs-on: ubuntu-latest
+    if: false # TODO(#M0): enable with "Wire up the generated API client"
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: npm
+
+      - run: npm ci
+
+      - name: Regenerate API types
+        run: npm run api:sync
+
+      - name: Fail if they differ from what is committed
+        run: |
+          if ! git diff --quiet --exit-code src/app/core/api/generated; then
+            echo "::error::API types are stale. Run 'npm run api:sync' and commit the result."
+            git diff src/app/core/api/generated
+            exit 1
+          fi

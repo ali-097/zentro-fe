@@ -1,0 +1,44 @@
+version: 2
+
+# Grouped and capped deliberately. Ungrouped Dependabot on an Angular project opens a dozen
+# PRs a week and everyone stops reading them, which is worse than not running it at all.
+updates:
+  - package-ecosystem: npm
+    directory: /
+    schedule:
+      interval: weekly
+      day: monday
+    open-pull-requests-limit: 3
+    commit-message:
+      prefix: 'chore(deps)'
+      prefix-development: 'chore(deps-dev)'
+    groups:
+      angular:
+        patterns: ['@angular/*', '@angular-devkit/*']
+      tailwind:
+        patterns: ['tailwindcss', '@tailwindcss/*', 'postcss', 'autoprefixer']
+      testing:
+        patterns: ['karma', 'karma-*', 'jasmine-core', '@types/jasmine']
+      linting:
+        patterns: ['eslint', 'eslint-*', '@eslint/*', 'typescript-eslint', 'angular-eslint', 'prettier']
+      types:
+        patterns: ['@types/*']
+        exclude-patterns: ['@types/jasmine']
+    ignore:
+      # Major Angular bumps are migrations with their own `ng update` process, not
+      # dependency updates. Do them deliberately, with an issue and a plan.
+      - dependency-name: '@angular/*'
+        update-types: ['version-update:semver-major']
+      - dependency-name: 'typescript'
+        update-types: ['version-update:semver-major']
+
+  - package-ecosystem: github-actions
+    directory: /
+    schedule:
+      interval: monthly
+    open-pull-requests-limit: 2
+    commit-message:
+      prefix: 'chore(ci)'
+    groups:
+      actions:
+        patterns: ['*']
