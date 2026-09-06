@@ -46,8 +46,12 @@ For anything data-driven you also need the API running:
 docker compose up -d db && npm run start:dev     # http://localhost:3000
 ```
 
-The dev server proxies `/api` to `:3000`, and that origin is already in the backend's CORS
-allowlist.
+`http://localhost:4200` is already in the backend's CORS allowlist, so requests work
+directly against `:3000`.
+
+> The dev-server proxy for `/api` does **not** exist yet — it lands with
+> [#7](https://github.com/ali-097/zentro-fe/issues/7) alongside the environment config.
+> Until then there is no HTTP layer at all, so nothing calls the API regardless.
 
 If something misbehaves, check
 **[docs/runbooks/local-dev.md](./docs/runbooks/local-dev.md)** before debugging — it covers
