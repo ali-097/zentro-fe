@@ -1,11 +1,11 @@
 blank_issues_enabled: false
 contact_links:
   - name: Backend issue
-    url: https://github.com/ali-097/Zentro-BE/issues/new/choose
+    url: https://github.com/ali-097/zentro-be/issues/new/choose
     about: For anything in the API. If it spans both, file in each and link them.
   - name: Security vulnerability
-    url: https://github.com/ali-097/Zentro-FE/security/advisories/new
+    url: https://github.com/ali-097/zentro-fe/security/advisories/new
     about: Report privately. Please do not open a public issue.
   - name: Project board
-    url: https://github.com/ali-097/Zentro-FE/projects
+    url: https://github.com/ali-097/zentro-fe/projects
     about: See what is planned, in progress and done across both repos.

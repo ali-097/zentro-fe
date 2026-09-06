@@ -14,15 +14,15 @@ With `nvm`: `nvm use` picks up `.nvmrc` automatically.
 ## First run
 
 ```bash
-git clone https://github.com/ali-097/Zentro-FE.git
-cd Zentro-FE
+git clone https://github.com/ali-097/zentro-fe.git
+cd zentro-fe
 
 npm ci        # ci, not install — respects the lockfile exactly
 npm start     # http://localhost:4200
 ```
 
 For anything data-driven, the API must also be running. In a
-[Zentro-BE](https://github.com/ali-097/Zentro-BE) checkout:
+[zentro-be](https://github.com/ali-097/zentro-be) checkout:
 
 ```bash
 docker compose up -d db
@@ -66,7 +66,7 @@ lsof -ti:4200 | xargs kill -9
 
 ### Requests fail with CORS errors
 
-The API isn't running, or it's on a different port. Start Zentro-BE on `:3000` — that origin
+The API isn't running, or it's on a different port. Start zentro-be on `:3000` — that origin
 is already in its CORS allowlist.
 
 If the API *is* running, check the backend's `CORS_ORIGINS` includes
@@ -98,7 +98,7 @@ There is no error for the first form. It silently does nothing.
 ### `npm run api:sync` fails
 
 Either the backend hasn't published `openapi.json` yet (true until the M0 Swagger issue
-lands), or you're offline. It fetches from the Zentro-BE repo on GitHub — it does not need
+lands), or you're offline. It fetches from the zentro-be repo on GitHub — it does not need
 the API running locally.
 
 ### CI says API types are stale

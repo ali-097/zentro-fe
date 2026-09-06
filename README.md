@@ -3,7 +3,7 @@
 The Angular client for **Zentro**, an expense-sharing app — groups, shared expenses, split
 calculation, running balances and settle-up.
 
-The API lives in a separate repository: **[Zentro-BE](https://github.com/ali-097/Zentro-BE)**.
+The API lives in a separate repository: **[zentro-be](https://github.com/ali-097/zentro-be)**.
 This app is a pure consumer of it — see [The client enforces nothing](#the-client-enforces-nothing).
 
 | | |
@@ -42,7 +42,7 @@ npm start             # http://localhost:4200
 For anything data-driven you also need the API running:
 
 ```bash
-# in the Zentro-BE checkout
+# in the zentro-be checkout
 docker compose up -d db && npm run start:dev     # http://localhost:3000
 ```
 

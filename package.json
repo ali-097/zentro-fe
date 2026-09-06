@@ -13,7 +13,7 @@
     "format": "prettier --write \"src/**/*.{ts,html,css,json}\"",
     "format:check": "prettier --check \"src/**/*.{ts,html,css,json}\"",
     "typecheck": "tsc --noEmit -p tsconfig.app.json",
-    "api:sync": "openapi-typescript https://raw.githubusercontent.com/ali-097/Zentro-BE/main/openapi.json -o src/app/core/api/generated/schema.d.ts",
+    "api:sync": "openapi-typescript https://raw.githubusercontent.com/ali-097/zentro-be/main/openapi.json -o src/app/core/api/generated/schema.d.ts",
     "serve:ssr:Zentro-FE": "node dist/Zentro-FE/server/server.mjs"
   },
   "prettier": {
