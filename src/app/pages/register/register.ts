@@ -1,11 +1,12 @@
-import { Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { AuthService } from '../../services/auth.service';
 
 @Component({
-  selector: 'app-register',
+  selector: 'z-register',
   standalone: true,
   imports: [FormsModule],
+  changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
     <div class="max-w-md mx-auto bg-white shadow p-6 rounded">
       <h2 class="text-2xl font-bold mb-4">Register</h2>
@@ -47,7 +48,7 @@ export class Register {
   email = '';
   password = '';
 
-  constructor(private auth: AuthService) {}
+  private readonly auth = inject(AuthService);
 
   onSubmit() {
     this.auth.register(this.name, this.email, this.password);

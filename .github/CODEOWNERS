@@ -1,0 +1,25 @@
+# Code owners are requested for review automatically.
+# The last matching pattern wins.
+
+# Default owner for everything.
+*                               @ali-097
+
+# Auth: the access token must never reach persistent storage, and the 401 refresh flow
+# is easy to get subtly wrong in ways that revoke every session.
+/src/app/core/auth/             @ali-097
+
+# The generated API client — regenerated, never hand-edited.
+/src/app/core/api/              @ali-097
+
+# The token layer. A change here restyles the whole app.
+/src/styles.css                 @ali-097
+
+# Shared primitives: every feature depends on these.
+/src/app/shared/ui/             @ali-097
+
+# Decisions and anything that changes how the team works.
+/docs/adr/                      @ali-097
+/.github/                       @ali-097
+/eslint.config.js               @ali-097
+/AGENTS.md                      @ali-097
+/CLAUDE.md                      @ali-097

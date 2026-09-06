@@ -1,0 +1,69 @@
+name: Feature
+description: A new screen, flow or capability
+labels: ['type:feature']
+body:
+  - type: textarea
+    id: what
+    attributes:
+      label: What
+      description: One or two sentences. What should a user be able to do that they can't?
+    validations:
+      required: true
+
+  - type: textarea
+    id: why
+    attributes:
+      label: Why
+      description: What's the user hitting today? Skip this and it gets built to the wrong shape.
+    validations:
+      required: true
+
+  - type: textarea
+    id: design
+    attributes:
+      label: Design / layout
+      description: A sketch, a reference, or a description. Rough is fine.
+
+  - type: textarea
+    id: states
+    attributes:
+      label: The four states
+      description: Every server-backed view needs all four. Empty is the most-skipped and the first thing a new user sees.
+      value: |
+        - **Loading:**
+        - **Empty:**
+        - **Error:**
+        - **Loaded:**
+    validations:
+      required: true
+
+  - type: textarea
+    id: acceptance
+    attributes:
+      label: Acceptance criteria
+      value: |
+        - [ ]
+        - [ ] Keyboard reachable, focus visible, interactive elements have accessible names
+        - [ ] Works in dark mode and at 375px wide
+        - [ ] Colors come from theme tokens — no raw hex
+    validations:
+      required: true
+
+  - type: input
+    id: backend
+    attributes:
+      label: Paired backend issue
+      description: Link it if this needs an API change. Both should be filed together.
+      placeholder: https://github.com/ali-097/Zentro-BE/issues/00
+
+  - type: dropdown
+    id: priority
+    attributes:
+      label: Priority
+      options:
+        - 'P0 — blocks other work'
+        - 'P1 — needed for the current milestone'
+        - 'P2 — should happen'
+        - 'P3 — nice to have'
+    validations:
+      required: true

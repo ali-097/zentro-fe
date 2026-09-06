@@ -6,12 +6,20 @@
     "start": "ng serve",
     "build": "ng build",
     "watch": "ng build --watch --configuration development",
-    "test": "ng test",
+    "test": "ng test --watch=false --browsers=ChromeHeadless",
+    "test:watch": "ng test",
+    "lint": "eslint .",
+    "lint:fix": "eslint . --fix",
+    "format": "prettier --write \"src/**/*.{ts,html,css,json}\"",
+    "format:check": "prettier --check \"src/**/*.{ts,html,css,json}\"",
+    "typecheck": "tsc --noEmit -p tsconfig.app.json",
+    "api:sync": "openapi-typescript https://raw.githubusercontent.com/ali-097/Zentro-BE/main/openapi.json -o src/app/core/api/generated/schema.d.ts",
     "serve:ssr:Zentro-FE": "node dist/Zentro-FE/server/server.mjs"
   },
   "prettier": {
     "printWidth": 100,
     "singleQuote": true,
+    "endOfLine": "lf",
     "overrides": [
       {
         "files": "*.html",
@@ -20,6 +28,9 @@
         }
       }
     ]
+  },
+  "engines": {
+    "node": ">=22"
   },
   "private": true,
   "dependencies": {
@@ -46,12 +57,18 @@
     "@types/express": "^5.0.1",
     "@types/jasmine": "~5.1.0",
     "@types/node": "^20.17.19",
+    "angular-eslint": "^20.7.0",
+    "eslint": "^9.39.5",
+    "eslint-config-prettier": "^10.1.8",
     "jasmine-core": "~5.9.0",
     "karma": "~6.4.0",
     "karma-chrome-launcher": "~3.2.0",
     "karma-coverage": "~2.2.0",
     "karma-jasmine": "~5.1.0",
     "karma-jasmine-html-reporter": "~2.1.0",
-    "typescript": "~5.9.2"
+    "openapi-typescript": "^7.13.0",
+    "prettier": "^3.9.6",
+    "typescript": "~5.9.2",
+    "typescript-eslint": "^8.69.0"
   }
 }

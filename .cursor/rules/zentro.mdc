@@ -1,0 +1,24 @@
+---
+description: Zentro Web conventions and rules
+alwaysApply: true
+---
+
+The instructions for this repository live in `AGENTS.md` at the repo root. Read it — it is
+the single source of truth for every AI tool used here, so there is nothing to keep in sync.
+
+The rules most likely to cause real bugs, restated so they are never missed:
+
+1. The app is **zoneless**. Anything a template reads must be a `signal`. A plain class
+   property will not re-render and **nothing warns you**.
+2. Components are `OnPush`, standalone, and use `inject()` over constructor injection.
+3. Colors and spacing come from Tailwind theme tokens. **Never raw hex**, never arbitrary
+   `[...]` values — a raw color is invisible to the theme and breaks in dark mode.
+4. Actions are `<button>`, navigation is `<a>`. Everything interactive is keyboard-reachable
+   and has an accessible name.
+5. Layer imports go one way: `features → shared → core`. Never feature-to-feature.
+6. **Never do arithmetic on money.** The API computes; this app formats.
+7. API types come from `core/api/generated/` via `npm run api:sync`. Never hand-write an
+   interface mirroring a response.
+8. The access token lives in memory only — never `localStorage` or `sessionStorage`.
+
+Before writing any color or spacing value, read `docs/styling.md`.
