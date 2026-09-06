@@ -9,7 +9,7 @@ file only points at them.
 ## What this is
 
 Zentro is an expense-sharing app (Splitwise-class). This repo is the **Angular SPA**; the
-REST API is a separate repo, [Zentro-BE](https://github.com/ali-097/Zentro-BE).
+REST API is a separate repo, [zentro-be](https://github.com/ali-097/zentro-be).
 
 Angular 20 standalone · signals · zoneless · Tailwind v4 · TypeScript strict · Node 22.
 **No SSR** — see [ADR-0001](./docs/adr/0001-drop-ssr-for-spa.md). **No NgRx** — see

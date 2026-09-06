@@ -54,7 +54,7 @@ body:
     attributes:
       label: Paired backend issue
       description: Link it if this needs an API change. Both should be filed together.
-      placeholder: https://github.com/ali-097/Zentro-BE/issues/00
+      placeholder: https://github.com/ali-097/zentro-be/issues/00
 
   - type: dropdown
     id: priority

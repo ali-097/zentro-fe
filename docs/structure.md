@@ -5,7 +5,7 @@ Where everything lives, and where to put new things.
 ## The tree
 
 ```
-Zentro-FE/
+zentro-fe/
 ├── src/
 │   ├── main.ts                    Bootstraps the app with appConfig
 │   ├── index.html · styles.css    Global entry and the Tailwind @theme token layer

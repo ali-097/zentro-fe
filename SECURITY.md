@@ -4,7 +4,7 @@
 
 **Please don't open a public issue.**
 
-Report privately through GitHub's [Security Advisories](https://github.com/ali-097/Zentro-FE/security/advisories/new),
+Report privately through GitHub's [Security Advisories](https://github.com/ali-097/zentro-fe/security/advisories/new),
 which creates a private thread with the maintainers.
 
 Include what you can: what the issue is, steps to reproduce or a proof of concept, the
@@ -16,7 +16,7 @@ security team, so please be patient — but it will be taken seriously.
 ## Scope
 
 This is a browser client. It holds **no secrets** and enforces **no rules** — every
-authorization decision lives in the [API](https://github.com/ali-097/Zentro-BE). A route
+authorization decision lives in the [API](https://github.com/ali-097/zentro-be). A route
 guard here stops a logged-out user seeing an empty page; it is not a security boundary, and
 bypassing it is expected behaviour rather than a vulnerability.
 
@@ -34,7 +34,7 @@ Findings that do matter here:
 **Out of scope:** bypassing a route guard, editing client state in devtools, reading values
 in the JS bundle (it is all public), and missing headers with no demonstrated impact. If you
 can make the *API* return data you shouldn't have, that's a
-[Zentro-BE](https://github.com/ali-097/Zentro-BE/security/advisories/new) report and a much
+[zentro-be](https://github.com/ali-097/zentro-be/security/advisories/new) report and a much
 more serious one.
 
 ## Supported versions

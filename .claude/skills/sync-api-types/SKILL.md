@@ -16,7 +16,7 @@ npm run api:sync
 ```
 
 This fetches `openapi.json` from
-[Zentro-BE](https://github.com/ali-097/Zentro-BE) on GitHub and regenerates
+[zentro-be](https://github.com/ali-097/zentro-be) on GitHub and regenerates
 `src/app/core/api/generated/`. It does **not** need the API running locally.
 
 Then check what moved:

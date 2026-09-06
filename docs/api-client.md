@@ -8,7 +8,7 @@ The backend serves an OpenAPI document. This app generates its types from it:
 npm run api:sync
 ```
 
-That fetches `openapi.json` from [Zentro-BE](https://github.com/ali-097/Zentro-BE) and
+That fetches `openapi.json` from [zentro-be](https://github.com/ali-097/zentro-be) and
 regenerates `src/app/core/api/generated/`. **Generated files are committed, and CI fails if
 regenerating produces a diff.**
 

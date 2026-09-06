@@ -5,7 +5,7 @@
 
 ## Context
 
-The API lives in a separate repository ([Zentro-BE](https://github.com/ali-097/Zentro-BE)),
+The API lives in a separate repository ([zentro-be](https://github.com/ali-097/zentro-be)),
 so there is no shared package and nothing structurally prevents this app's idea of a response
 from drifting from what the server actually returns.
 
@@ -17,7 +17,7 @@ reality — and fails at runtime, in front of a user, on a screen about money.
 
 **Types are generated from the backend's OpenAPI document, and drift fails the build.**
 
-1. Zentro-BE emits `openapi.json` on merge to `main`, generated from its Swagger decorators.
+1. zentro-be emits `openapi.json` on merge to `main`, generated from its Swagger decorators.
 2. `npm run api:sync` fetches it and regenerates `src/app/core/api/generated/`.
 3. **Generated files are committed.**
 4. **CI regenerates and fails if the result differs from what's committed.**

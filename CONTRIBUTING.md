@@ -8,7 +8,7 @@ See the [Quickstart](./README.md#quickstart) and, if anything misbehaves,
 ## Picking work
 
 All work lives on the shared **Zentro project board**, which spans this repo and
-[Zentro-BE](https://github.com/ali-097/Zentro-BE).
+[zentro-be](https://github.com/ali-097/zentro-be).
 
 - Anything in the **M0 Foundation** milestone comes first. It is all `priority:P0` and it
   blocks feature work — M1+ issues assume the restructure, the HTTP layer and the generated

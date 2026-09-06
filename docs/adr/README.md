@@ -18,7 +18,7 @@ they'd be trading away.
 | [0005](./0005-zoneless-change-detection.md) | Zoneless change detection | Accepted |
 
 Backend decisions live in
-[Zentro-BE/docs/adr](https://github.com/ali-097/Zentro-BE/tree/main/docs/adr) — including
+[zentro-be/docs/adr](https://github.com/ali-097/zentro-be/tree/main/docs/adr) — including
 money as integer minor units and the two-repo split, both of which constrain this app.
 
 ## Writing one
