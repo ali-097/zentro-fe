@@ -24,9 +24,9 @@ This app is a pure consumer of it — see [The client enforces nothing](#the-cli
 > M0 builds toward and what every issue is written against. Read them as the spec.
 >
 > The app today is a scaffold: pages exist but are mostly empty, auth is a `localStorage`
-> mock, and there is no HTTP layer. SSR removal, the zoneless migration, the `core`/`shared`/
-> `features` restructure and the generated API client are all `priority:P0` issues on the
-> board. Until they land, `npm run api:sync` has nothing to fetch.
+> mock, and there is no HTTP layer. The zoneless migration, the `core`/`shared`/`features`
+> restructure and the generated API client are all `priority:P0` issues on the board. Until
+> they land, `npm run api:sync` has nothing to fetch.
 
 ---
 
@@ -74,6 +74,24 @@ the common failures. If your problem isn't there, that's a documentation bug wor
 | `npm test` | Unit tests, headless |
 | `npm run test:watch` | Unit tests in watch mode |
 | `npm run api:sync` | Regenerate typed API models from the backend's OpenAPI document |
+
+---
+
+## Deploying
+
+`npm run build` emits **static files** to `dist/Zentro-FE/browser/` — HTML, JS and CSS.
+There is no server bundle and no Node process to run, so any static host or CDN will serve it.
+
+Two things the host has to get right:
+
+- **Rewrite every unmatched path to `/index.html`.** Routing happens in the browser, so `/`
+  is the only path that exists on disk. Without the fallback, a deep link like `/group/42` —
+  or simply refreshing that page — returns 404.
+- **Don't cache `index.html`.** Assets are content-hashed (`outputHashing: "all"`) and can be
+  cached indefinitely, but `index.html` is what points at the current hashes.
+
+The actual deployment setup — host, pipeline, environments — is
+[#39](https://github.com/ali-097/zentro-fe/issues/39).
 
 ---
 
